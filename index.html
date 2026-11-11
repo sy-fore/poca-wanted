@@ -213,7 +213,6 @@ function render(){
  const isTrade=$('listType').value==='trade';document.body.classList.toggle('trade-mode',isTrade);$('artCount').textContent=String(isTrade?owned.length+wanted.length:chosen.length).padStart(2,'0');
  $('artTitle').innerHTML=isTrade?'TRADE<br>PHOTOCARDS':'WANTED<br>PHOTOCARDS';$('artSub').textContent=isTrade?'HAVE ↔ WANT · PHOTOCARD EXCHANGE':'WANTED PHOTOCARDS · LOOKING FOR';
  const columnCount=Math.max(2,Math.min(10,Number($('columns').value)||3));const grid=$('chosenGrid');grid.style.gridTemplateColumns=`repeat(${columnCount}, minmax(0, 1fr))`;grid.dataset.columns=String(columnCount);
- if(!chosen.length)grid.innerHTML='<div class="empty">왼쪽 보관함에서 구하고 싶은 포카를 선택해 주세요.</div>';
 if(!chosen.length) {
   grid.innerHTML = '<div class="empty">왼쪽 보관함에서 구하고 싶은 포카를 선택해 주세요.</div>';
 } else {
@@ -260,44 +259,6 @@ async function savePNG(){
   const ctx=cv.getContext('2d'); if(!ctx) throw new Error('이미지 캔버스를 만들 수 없습니다.');
   ctx.fillStyle=$('bgColor').value||'#f4eee7';ctx.fillRect(0,0,W,cv.height);
 
-  
-ctx.fillStyle = '#252525';
-ctx.font = '800 13px Arial, sans-serif';
-ctx.textAlign = 'center';
-
-// 이름을 여러 줄로 표시
-const words = c.name.split(' ');
-const lines = [];
-let currentLine = '';
-
-words.forEach(word => {
-  const testLine = currentLine
-    ? currentLine + ' ' + word
-    : word;
-
-  if (ctx.measureText(testLine).width > cardW) {
-    if (currentLine) lines.push(currentLine);
-    currentLine = word;
-  } else {
-    currentLine = testLine;
-  }
-});
-
-if (currentLine) lines.push(currentLine);
-
-// 가운데 정렬
-lines.forEach((line, i) => {
-  ctx.fillText(
-    line,
-    x + cardW / 2,
-    y + imgH + 7 + i * 17,
-    cardW
-  );
-});
-
-ctx.textAlign = 'left';
-
-  
   const title=isTrade?['TRADE','PHOTOCARDS']:['WANTED','PHOTOCARDS'];
   ctx.font='900 58px Arial,sans-serif';title.forEach((t,i)=>ctx.fillText(t,top,top+i*57, W-2*pad-220));
   ctx.fillText(isTrade?'HAVE ↔ WANT · PHOTOCARD EXCHANGE':'MY WISHLIST · LOOKING FOR',top,top+title.length*57+5);
@@ -313,8 +274,26 @@ ctx.textAlign = 'left';
    const img=await loadImage(c.src);const ratio=Math.min(cardW/img.naturalWidth,imgH/img.naturalHeight),dw=img.naturalWidth*ratio,dh=img.naturalHeight*ratio;
    ctx.drawImage(img,x+(cardW-dw)/2,y+(imgH-dh)/2,dw,dh);ctx.strokeStyle='#00000025';ctx.strokeRect(x,y,cardW,imgH);
    ctx.fillStyle='#252525';ctx.font=`800 ${Math.max(9,Math.min(15,cardW/9))}px Arial,sans-serif`;
-   
-   
+   ctx.textAlign='center';
+   ctx.textBaseline='top';
+   const words=(c.name||'').split(' ');
+   const lines=[];
+   let currentLine='';
+   words.forEach(word=>{
+     const testLine=currentLine?currentLine+' '+word:word;
+     if(ctx.measureText(testLine).width>cardW){
+       if(currentLine)lines.push(currentLine);
+       currentLine=word;
+     }else{
+       currentLine=testLine;
+     }
+   });
+   if(currentLine)lines.push(currentLine);
+   lines.forEach((line,i)=>{
+     ctx.fillText(line,x+cardW/2,y+imgH+7+i*17,cardW);
+   });
+   ctx.textAlign='left';
+   ctx.textBaseline='alphabetic';
   }
   if(isTrade){
    for(let i=0;i<owned.length;i++) await drawCard(owned[i],i,'owned');
@@ -4413,9 +4392,6 @@ cards = catalogue.map(item => ({
 }));
 
 render();
-
-cards=catalogue.map((item,i)=>({id:'sample-'+i,name:item[1],category:item[0],tags:item[0]+' 샘플',src:makeCardArt(i,item[2],String(i+1).padStart(2,'0'))}));
-render();$('artDate').textContent=new Date().toLocaleDateString('ko-KR');
 
 </script>
 </body>
