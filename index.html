@@ -416,8 +416,29 @@ async function savePNG(){
    
   /*ctx.textAlign='right';ctx.font='800 23px Arial,sans-serif';ctx.fillText(String(chosen.length).padStart(2,'0'),W-pad,top+10);ctx.font='800 13px Arial,sans-serif';ctx.fillText('CARDS TOTAL',W-pad,top+42);ctx.textAlign='left';*/
   ctx.strokeStyle='#252525';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(pad,top+headH);ctx.lineTo(W-pad,top+headH);ctx.stroke();
-  if(isTrade){ctx.font='800 17px Arial,sans-serif';ctx.fillText('내가 보유한 포카',pad,startY-28);ctx.fillText('내가 원하는 포카',W/2+22,startY-28);ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(W/2,startY-30);ctx.lineTo(W/2,cv.height-pad-8);ctx.stroke();}
-  const loadImage=src=>new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>reject(new Error('포카 이미지를 불러오지 못했습니다.'));img.src=src;});
+  /*if(isTrade){ctx.font='800 17px Arial,sans-serif';ctx.fillText('내가 보유한 포카',pad,startY-28);ctx.fillText('내가 원하는 포카',W/2+22,startY-28);ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(W/2,startY-30);ctx.lineTo(W/2,cv.height-pad-8);ctx.stroke();}*/
+  if(isTrade){
+    ctx.font='800 17px Arial,sans-serif';
+    
+    // 좌우 각각의 영역 중앙 X 좌표 계산
+    const halfW = (W - 2 * pad - 44) / 2;
+    const leftCenter = pad + halfW / 2;
+    const rightCenter = W / 2 + 22 + halfW / 2;
+    
+    // 텍스트를 정중앙 정렬로 출력
+    ctx.textAlign = 'center';
+    ctx.fillText('내가 보유한 포카', leftCenter, startY - 28);
+    ctx.fillText('내가 원하는 포카', rightCenter, startY - 28);
+    ctx.textAlign = 'left'; // 정렬 원상복구
+    
+    // 중앙 구분선 그리기
+    ctx.lineWidth=2;
+    ctx.beginPath();
+    ctx.moveTo(W/2,startY-30);
+    ctx.lineTo(W/2,cv.height-pad-8);
+    ctx.stroke();
+  }
+   const loadImage=src=>new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>reject(new Error('포카 이미지를 불러오지 못했습니다.'));img.src=src;});
   async function drawCard(c,index,side){
    const localIndex=isTrade?index:index;
    const x=isTrade?(side==='owned'?pad+ (localIndex%cols)*(cardW+gap):W/2+22+(localIndex%cols)*(cardW+gap)):pad+(localIndex%cols)*(cardW+gap);
