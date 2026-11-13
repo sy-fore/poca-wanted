@@ -50,6 +50,14 @@ input[type=file]{display:none}
 
 .item .itag{font-size:9px;color:#8a8580;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
+  /*이미지저장금지*/
+.item img, .chosen-card img {
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-drag: none;
+  user-select: none;
+  pointer-events: none;
+}
 .checkmark{position:absolute;top:12px;right:12px;width:19px;height:19px;background:#252525;color:#fff;border-radius:50%;font-size:12px;display:none;text-align:center;line-height:19px}.item.selected .checkmark{display:block}
 .empty{padding:24px 8px;text-align:center;color:#999;font-size:12px;line-height:1.7;grid-column:1/-1}
 .preview-panel{padding:24px}.preview-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:18px}.preview-top p{margin:5px 0 0;color:#888;font-size:12px}.actions{display:flex;gap:8px;flex-wrap:wrap}
@@ -332,7 +340,7 @@ function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':
 function render(){
  const q=$('search').value.trim().toLowerCase();
  const category=$('category').value; const filtered=cards.filter(c=>(category==='all'||c.category===category)&&(c.name+' '+c.tags+' '+c.category).toLowerCase().includes(q));
- $('inventoryCount').textContent=`${filtered.length}개 표시 / 전체 ${cards.length}개`;
+ $('inventoryCount').textContent=`${filtered.length}개  / 전체 ${cards.length}개`;
  const inv=$('inventory');
  if(!filtered.length){inv.innerHTML=`<div class="empty">${cards.length?'검색 결과가 없어요. 다른 키워드로 검색해 보세요.':'포카 목록을 불러오는 중…'}</div>`}
  else inv.innerHTML=filtered.map(c=>`<div class="item ${selected.has(c.id)||ownedCards.has(c.id)||wantedCards.has(c.id)?'selected':''}" data-id="${c.id}" title="클릭하여 선택"><span class="checkmark">✓</span><img src="${c.src}" alt=""><div class="iname">${escapeHtml(c.name)}</div><div class="itag">${escapeHtml(c.tags||'키워드 없음')}</div><div class="trade-actions"><button type="button" data-owned="${c.id}" class="${ownedCards.has(c.id)?'active':''}">내가 보유</button><button type="button" data-wanted="${c.id}" class="${wantedCards.has(c.id)?'active':''}">내가 원함</button></div></div>`).join('');
@@ -399,14 +407,14 @@ async function savePNG(){
     ctx.fillText(t,top,top+i*57, W-2*pad-220);
   });
   
-  ctx.font='800 18px Arial,sans-serif';
+  /*ctx.font='800 18px Arial,sans-serif';
   ctx.fillText(
     isTrade?'HAVE ↔ WANT · PHOTOCARD EXCHANGE':'WANTED PHOTOCARDS · LOOKING FOR',
     top,
     top+title.length*57+5
-  );
+  );*/
    
-  ctx.textAlign='right';ctx.font='800 23px Arial,sans-serif';ctx.fillText(String(chosen.length).padStart(2,'0'),W-pad,top+10);ctx.font='800 13px Arial,sans-serif';ctx.fillText('CARDS TOTAL',W-pad,top+42);ctx.textAlign='left';
+  /*ctx.textAlign='right';ctx.font='800 23px Arial,sans-serif';ctx.fillText(String(chosen.length).padStart(2,'0'),W-pad,top+10);ctx.font='800 13px Arial,sans-serif';ctx.fillText('CARDS TOTAL',W-pad,top+42);ctx.textAlign='left';*/
   ctx.strokeStyle='#252525';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(pad,top+headH);ctx.lineTo(W-pad,top+headH);ctx.stroke();
   if(isTrade){ctx.font='800 17px Arial,sans-serif';ctx.fillText('내가 보유한 포카',pad,startY-28);ctx.fillText('내가 원하는 포카',W/2+22,startY-28);ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(W/2,startY-30);ctx.lineTo(W/2,cv.height-pad-8);ctx.stroke();}
   const loadImage=src=>new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>reject(new Error('포카 이미지를 불러오지 못했습니다.'));img.src=src;});
@@ -443,14 +451,20 @@ async function savePNG(){
    for(let i=0;i<owned.length;i++) await drawCard(owned[i],i,'owned');
    for(let i=0;i<wanted.length;i++) await drawCard(wanted[i],i,'wanted');
   } else {for(let i=0;i<chosen.length;i++) await drawCard(chosen[i],i,'wanted');}
-  const fy=cv.height-pad+4;ctx.strokeStyle='#252525';ctx.beginPath();ctx.moveTo(pad,fy-20);ctx.lineTo(W-pad,fy-20);ctx.stroke();ctx.globalAlpha=.7;ctx.font='800 13px Arial,sans-serif';ctx.fillText('POCA WANTED LIST',pad,fy);ctx.textAlign='right';ctx.fillText(new Date().toLocaleDateString('ko-KR'),W-pad,fy);ctx.textAlign='left';ctx.globalAlpha=1;
+ /* const fy=cv.height-pad+4;ctx.strokeStyle='#252525';ctx.beginPath();ctx.moveTo(pad,fy-20);ctx.lineTo(W-pad,fy-20);ctx.stroke();ctx.globalAlpha=.7;ctx.font='800 13px Arial,sans-serif';ctx.fillText('POCA WANTED LIST',pad,fy);ctx.textAlign='right';ctx.fillText(new Date().toLocaleDateString('ko-KR'),W-pad,fy);ctx.textAlign='left';ctx.globalAlpha=1;*/
   const blob=await new Promise((resolve,reject)=>cv.toBlob(b=>b?resolve(b):reject(new Error('PNG 변환에 실패했습니다. 브라우저에서 다시 시도해 주세요.')),'image/png'));
   const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=isTrade?'poca-trade-board.png':'poca-wanted-list.png';a.style.display='none';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);toast('PNG 이미지 저장을 시작했어요.');
  } catch(err){console.error(err);toast('저장 실패: 페이지를 새로고침한 뒤 다시 시도해 주세요.');}
  finally {button.disabled=false;button.textContent='이미지 저장';}
 }
 $('saveImage').addEventListener('click',savePNG);
-
+  
+// 이미지 우클릭 방지
+document.addEventListener('contextmenu', function(e) {
+  if (e.target.tagName === 'IMG') {
+    e.preventDefault();
+  }
+});
 
 // =====================================
 // 내가 가진 포카 이미지 목록
