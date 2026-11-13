@@ -397,7 +397,8 @@ async function savePNG(){
   const rightRows=isTrade?Math.ceil(wanted.length/cols):0;
   const rows=isTrade?Math.max(leftRows,rightRows):leftRows;
   const startY=top+headH+44;
-  const H=Math.max(900,startY+rows*(imgH+nameH+gap)+footH+pad);
+  /*const H=Math.max(900,startY+rows*(imgH+nameH+gap)+footH+pad);*/
+  const H = Math.max(500, startY + rows * (imgH + nameH + gap) - gap + pad);
   const cv=document.createElement('canvas');cv.width=W;cv.height=Math.ceil(H);
   const ctx=cv.getContext('2d'); if(!ctx) throw new Error('이미지 캔버스를 만들 수 없습니다.');
   ctx.fillStyle=$('bgColor').value||'#f4eee7';ctx.fillRect(0,0,W,cv.height);
