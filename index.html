@@ -330,8 +330,21 @@ async function savePNG(){
   ctx.fillStyle=$('bgColor').value||'#f4eee7';ctx.fillRect(0,0,W,cv.height);
 
   const title=isTrade?['TRADE','PHOTOCARDS']:['WANTED','PHOTOCARDS'];
-  ctx.font='900 58px Arial,sans-serif';title.forEach((t,i)=>ctx.fillText(t,top,top+i*57, W-2*pad-220));
-  ctx.fillText(isTrade?'HAVE ↔ WANT · PHOTOCARD EXCHANGE':'MY WISHLIST · LOOKING FOR',top,top+title.length*57+5);
+
+  ctx.fillStyle='#252525'; // 제목 글자 색상 지정
+  ctx.font='900 58px Arial,sans-serif';
+  
+  title.forEach((t,i)=>{
+    ctx.fillText(t,top,top+i*57, W-2*pad-220);
+  });
+  
+  ctx.font='800 18px Arial,sans-serif';
+  ctx.fillText(
+    isTrade?'HAVE ↔ WANT · PHOTOCARD EXCHANGE':'WANTED PHOTOCARDS · LOOKING FOR',
+    top,
+    top+title.length*57+5
+  );
+   
   ctx.textAlign='right';ctx.font='800 23px Arial,sans-serif';ctx.fillText(String(chosen.length).padStart(2,'0'),W-pad,top+10);ctx.font='800 13px Arial,sans-serif';ctx.fillText('CARDS TOTAL',W-pad,top+42);ctx.textAlign='left';
   ctx.strokeStyle='#252525';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(pad,top+headH);ctx.lineTo(W-pad,top+headH);ctx.stroke();
   if(isTrade){ctx.font='800 17px Arial,sans-serif';ctx.fillText('내가 보유한 포카',pad,startY-28);ctx.fillText('내가 원하는 포카',W/2+22,startY-28);ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(W/2,startY-30);ctx.lineTo(W/2,cv.height-pad-8);ctx.stroke();}
