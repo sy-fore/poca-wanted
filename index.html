@@ -203,23 +203,42 @@ input[type=file]{display:none}
       <option value="더레거시 특전">더레거시 특전</option>
       <option value="더레거시 심포니 엠디">더레거시 심포니 엠디</option>
       <option value="더레거시 심포니 앙콘 엠디">더레거시 심포니 앙콘 엠디</option>
+
+      <optgroup label="기타 이벤트">
       <option value="응원봉">응원봉</option>
       <option value="포레시피 엠디">포레시피 엠디</option>
       <option value="데뷔 7주년 카페 운명방정식">데뷔 7주년 카페 운명방정식</option>
+      <option value="카니버 콜라보">카니버 콜라보</option>
+      </optgroup>
+        
+      <optgroup label="더 로얄">
       <option value="21-22 더 로얄 엠디">21-22 더 로얄 엠디</option>
       <option value="21-22 더 로얄 디비디">21-22 더 로얄 디비디</option>
       <option value="22-23 더 로얄">22-23 더 로얄</option>
+      </optgroup>
+
+      <optgroup label="숲별 멤버십 키트">
       <option value="숲별 1기 키트">숲별 1기 키트</option>
       <option value="숲별 2기 키트">숲별 2기 키트</option>
       <option value="숲별 2.5기 키트">숲별 2.5기 키트</option>
       <option value="숲별 3기 키트">숲별 3기 키트</option>
+      </optgroup>
+
+      <optgroup label="숲별 멤버십 키트">
       <option value="2022 시그 포레스트">2022 시그 포레스트</option>
       <option value="2022 시그 스텔라">2022 시그 스텔라</option>
       <option value="2022 시그 구매 특전">2022 시그 구매 특전</option>
       <option value="2023 시그">2023 시그</option>
       <option value="2024-25 시그">2024-25 시그</option>
-      <option value="카니버 콜라보">카니버 콜라보</option>
-      <option value="입장특전">입장특전</option>
+      </optgroup>
+
+      <optgroup label="입장특전">
+      <option value="21-22 더 로얄">21-22 더 로얄</option>
+      <option value="일루셔니스트">일루셔니스트</option>
+      <option value="더웨이브">더웨이브</option>
+      <option value="엑스칼라">엑스칼라</option>
+      </optgroup>
+      
       </optgroup>
 
       <!-- 개인활동 카테고리: 추후 추가 -->
@@ -4484,6 +4503,36 @@ const catalogue = [
     image: "img/운명방정식 특전-4.png"
   },
 
+  //카니버콜라보
+  {
+    id: "carnival-collab-01",
+    category: "카니버 콜라보",
+    name: "카니버 콜라보",
+    tags: "배두훈",
+    image: "img/카니버 콜라보-1.png"
+  },
+  {
+      id: "carnival-collab-02",
+      category: "카니버 콜라보",
+      name: "카니버 콜라보",
+      tags: "강형호",
+      image: "img/카니버 콜라보-2.png"
+  },
+  {
+      id: "carnival-collab-03",
+      category: "카니버 콜라보",
+      name: "카니버 콜라보",
+      tags: "조민규",
+      image: "img/카니버 콜라보-3.png"
+  },
+  {
+      id: "carnival-collab-04",
+      category: "카니버 콜라보",
+      name: "카니버 콜라보",
+      tags: "고우림",
+      image: "img/카니버 콜라보-4.png"
+  },
+
 
   //더로얄2122
   {
@@ -6074,47 +6123,19 @@ const catalogue = [
   },
 
 
-  //카니버콜라보
-  {
-    id: "carnival-collab-01",
-    category: "카니버 콜라보",
-    name: "카니버 콜라보",
-    tags: "배두훈",
-    image: "img/카니버 콜라보-1.png"
-  },
-  {
-      id: "carnival-collab-02",
-      category: "카니버 콜라보",
-      name: "카니버 콜라보",
-      tags: "강형호",
-      image: "img/카니버 콜라보-2.png"
-  },
-  {
-      id: "carnival-collab-03",
-      category: "카니버 콜라보",
-      name: "카니버 콜라보",
-      tags: "조민규",
-      image: "img/카니버 콜라보-3.png"
-  },
-  {
-      id: "carnival-collab-04",
-      category: "카니버 콜라보",
-      name: "카니버 콜라보",
-      tags: "고우림",
-      image: "img/카니버 콜라보-4.png"
-  },
+  
 
 
   {
     id: "royal-entrance-01",
-    category: "입장특전",
+    category: "21-22 더 로얄",
     name: "21-22 더로얄 앙콘 입장특전 01",
     tags: "단체",
     image: "img/21-22 더로얄 입장특전-1.png"
   },
   {
       id: "royal-entrance-02",
-      category: "입장특전",
+      category: "21-22 더 로얄",
       name: "21-22 더로얄 입장특전 02",
       tags: "단체",
       image: "img/21-22 더로얄 입장특전-2.png"
@@ -6122,43 +6143,43 @@ const catalogue = [
 
   {
       id: "illusionist-entrance-05",
-      category: "입장특전",
+      category: "일루셔니스트",
       name: "일루셔니스트 입장특전",
       tags: "단체",
       image: "img/일루셔니스트 입장특전-5.png"
   },
   {
       id: "wave-entrance-05",
-      category: "입장특전",
+      category: "더웨이브",
       name: "더웨이브 첫콘 입장특전",
       tags: "단체",
       image: "img/더웨이브 입장특전-5.png"
   },
   {
       id: "excalibur-entrance-01",
-      category: "입장특전",
-      name: "엑스칼리버 입장특전",
+      category: "엑스칼라",
+      name: "엑스칼라 입장특전",
       tags: "배두훈",
       image: "img/엑스칼리버 입장특전-1.png"
   },
   {
       id: "excalibur-entrance-02",
-      category: "입장특전",
-      name: "엑스칼리버 입장특전",
+      category: "엑스칼라",
+      name: "엑스칼라 입장특전",
       tags: "강형호",
       image: "img/엑스칼리버 입장특전-2.png"
   },
   {
       id: "excalibur-entrance-03",
-      category: "입장특전",
-      name: "엑스칼리버 입장특전",
+      category: "엑스칼라",
+      name: "엑스칼라 입장특전",
       tags: "조민규",
       image: "img/엑스칼리버 입장특전-3.png"
   },
   {
       id: "excalibur-entrance-04",
-      category: "입장특전",
-      name: "엑스칼리버 입장특전",
+      category: "엑스칼라",
+      name: "엑스칼라 입장특전",
       tags: "고우림",
       image: "img/엑스칼리버 입장특전-4.png"
   },
