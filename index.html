@@ -387,7 +387,7 @@ async function savePNG(){
   if(!chosen.length){toast('먼저 포카를 선택해 주세요.');return;}
   button.disabled=true; const oldText=button.textContent; button.textContent='이미지 만드는 중…';
   const cols=Math.max(2,Math.min(10,Number($('columns').value)||3));
-  const W=1600,pad=70,gap=18,headH=155,footH=60,nameH=30,top=pad;
+  const W=1600,pad=70,gap=18,headH=95,footH=60,nameH=30,top=pad;
   const halfW=(W-2*pad-44)/2;
   const tradeCardW=(halfW-gap*(cols-1))/cols;
   const normalCardW=(W-2*pad-gap*(cols-1))/cols;
