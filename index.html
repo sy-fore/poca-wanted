@@ -191,6 +191,89 @@ input[type=file]{display:none}
 .header-note span {
   display: block;
 }
+
+  /* =========================
+   하단 제작자 영역
+========================= */
+
+.site-footer {
+  background: #fff;
+  border-top: 1px solid #e8e5e1;
+  padding: 35px 22px 20px;
+  margin-top: 20px;
+}
+
+.footer-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.footer-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.footer-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #aaa;
+}
+
+.footer-info strong {
+  font-size: 14px;
+  font-weight: 800;
+  color: #333;
+}
+
+.footer-info p {
+  margin: 0;
+  font-size: 11px;
+  color: #999;
+}
+
+.footer-bottom {
+  max-width: 1240px;
+  margin: 25px auto 0;
+  padding-top: 15px;
+  border-top: 1px solid #f0eeeb;
+  display: flex;
+  justify-content: space-between;
+  font-size: 9px;
+  letter-spacing: .5px;
+  color: #aaa;
+}
+
+  @media (max-width: 480px) {
+
+  .site-footer {
+    padding: 25px 16px 18px;
+    margin-top: 10px;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .footer-info strong {
+    font-size: 13px;
+  }
+
+  .footer-info p {
+    font-size: 10px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 7px;
+    font-size: 8px;
+  }
+}
 </style>
 </head>
 <body>
@@ -353,6 +436,30 @@ input[type=file]{display:none}
   <p class="notice">PNG 저장은 현재 미리보기 레이아웃을 고해상도 이미지로 내보냅니다. 이미지 원본은 수정되지 않으며, 저장된 리스트는 SNS 게시나 교환 글에 활용할 수 있어요.</p>
 </section>
 </main>
+
+  <!-- 하단 제작자 및 도움 주신 분 -->
+<footer class="site-footer">
+  <div class="footer-inner">
+
+    <div class="footer-info">
+      <span class="footer-label">CREATOR</span>
+      <strong>@sy_fore</strong>
+      <p>POCA WISH · TRADE LIST MAKER</p>
+    </div>
+
+    <div class="footer-info thanks">
+      <span class="footer-label">SPECIAL THANKS</span>
+      <strong>도움을 주신 분들</strong>
+      <p>사이트 제작에 도움을 주신 모든 분들께 감사드립니다.</p>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 POCA WISH. ALL RIGHTS RESERVED.</span>
+    <span>MADE WITH THANKS ♡</span>
+  </div>
+</footer>
 <div class="toast" id="toast"></div>
 <script>
 let cards=[], selected=new Set(), ownedCards=new Set(), wantedCards=new Set();
