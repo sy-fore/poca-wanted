@@ -273,6 +273,19 @@ input[type=file]{display:none}
     gap: 7px;
     font-size: 8px;
   }
+  .creator-link {
+    font-size: 14px;
+    font-weight: 800;
+    color: #333;
+    text-decoration: none;
+    width: fit-content;
+    transition: color 0.2s;
+  }
+  
+  .creator-link:hover {
+    color: #999;
+    text-decoration: underline;
+  }
 }
 </style>
 </head>
@@ -443,12 +456,23 @@ input[type=file]{display:none}
 
     <div class="footer-info">
       <span class="footer-label">CREATOR</span>
-      <strong>@sy_fore</strong>
+            <a href="https://x.com/sy_fore?s=20"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="creator-link">
+        @sy_fore
+      </a>
     </div>
 
     <div class="footer-info thanks">
       <span class="footer-label">SPECIAL THANKS</span>
       <strong>@live_in_fore</strong>
+        <a href="https://x.com/live_in_fore?s=20"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="creator-link">
+          @live_in_fore
+        </a>
       <p>사이트 제작에 도움을 주신 모든 분들께 감사드립니다.</p>
     </div>
 
