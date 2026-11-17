@@ -81,7 +81,15 @@ input[type=file]{display:none}
 }
 .art-head{border-bottom:1px solid currentColor;padding-bottom:16px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
 .art-title{font-size:clamp(22px,3vw,38px);font-weight:950;letter-spacing:-1.8px;line-height:1}.art-sub{font-size:9px;letter-spacing:2px;font-weight:800;margin-top:9px;opacity:.65}.art-count{text-align:right;font-size:10px;line-height:1.7;font-weight:800}
-#chosenGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-content:start;align-items:start;flex:none;width:100%;min-height:120px}.trade-layout{display:none;grid-template-columns:minmax(0,1fr) 2px minmax(0,1fr);gap:14px;flex:1;min-height:120px}.trade-side{min-width:0}.trade-side h3{font-size:11px;margin:0 0 10px;text-align:center}.trade-divider{background:#252525;min-height:100%}.trade-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;align-content:start}.trade-grid .chosen-name{font-size:9px}.item .trade-actions{display:flex;gap:4px;margin-top:7px}.item .trade-actions button{flex:1;padding:6px 2px;font-size:9px;white-space:nowrap}.item .trade-actions button.active{background:#252525;color:white}.trade-mode #chosenGrid{display:none}.trade-mode .trade-layout{display:grid}.trade-mode #artTitle{font-size:clamp(18px,2.3vw,30px)}
+#chosenGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-content:start;align-items:start;flex:none;width:100%;min-height:120px}.trade-layout{display:none;grid-template-columns:minmax(0,1fr) 2px minmax(0,1fr);gap:14px;flex:1;min-height:120px}.trade-side{min-width:0}
+/*.trade-side h3{font-size:11px;margin:0 0 10px;text-align:center}*/
+.trade-side h3 {
+  font-size: 20px;
+  font-weight: 800;
+  margin: 0 0 15px;
+  text-align: center;
+}
+.trade-divider{background:#252525;min-height:100%}.trade-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;align-content:start}.trade-grid .chosen-name{font-size:9px}.item .trade-actions{display:flex;gap:4px;margin-top:7px}.item .trade-actions button{flex:1;padding:6px 2px;font-size:9px;white-space:nowrap}.item .trade-actions button.active{background:#252525;color:white}.trade-mode #chosenGrid{display:none}.trade-mode .trade-layout{display:grid}.trade-mode #artTitle{font-size:clamp(18px,2.3vw,30px)}
 .chosen-card{min-width:0;width:100%}.chosen-card img{display:block;width:100%;aspect-ratio:3/4;object-fit:contain;background:#ffffff66;border:1px solid #00000012}
 
 /* 포카 이름 */
@@ -592,7 +600,7 @@ async function savePNG(){
     ctx.stroke();
   }*/
    if(isTrade){
-    ctx.font='800 17px Arial,sans-serif';
+    ctx.font='800 25px Arial,sans-serif';
     
     // 좌우 각각의 영역 중앙 X 좌표 계산
     const halfW = (W - 2 * pad - 44) / 2;
