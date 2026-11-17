@@ -629,7 +629,8 @@ async function savePNG(){
    const y=startY+Math.floor(localIndex/cols)*(imgH+nameH+gap);
    ctx.fillStyle='#ffffff55';ctx.fillRect(x,y,cardW,imgH);
    const img=await loadImage(c.src);const ratio=Math.min(cardW/img.naturalWidth,imgH/img.naturalHeight),dw=img.naturalWidth*ratio,dh=img.naturalHeight*ratio;
-   ctx.drawImage(img,x+(cardW-dw)/2,y+(imgH-dh)/2,dw,dh);ctx.strokeStyle='#00000025';ctx.strokeRect(x,y,cardW,imgH);
+   ctx.drawImage(img,x+(cardW-dw)/2,y+(imgH-dh)/2,dw,dh);
+    ctx.strokeStyle='#00000025';ctx.strokeRect(x,y,cardW,imgH);
    ctx.fillStyle='#252525';ctx.font=`800 ${Math.max(9,Math.min(15,cardW/9))}px Arial,sans-serif`;
    ctx.textAlign='center';
    ctx.textBaseline='top';
