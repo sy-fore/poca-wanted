@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>포카 위시 · 교환 리스트 메이커</title>
+  <!-- 브라우저 탭 아이콘 -->
+<link rel="icon" type="image/png" href="icons/wishicon.png">
 <style>
 :root{--ink:#242424;--muted:#777;--line:#e8e5e1;--paper:#fff;--soft:#f7f5f2;--accent:#282828}
 *{box-sizing:border-box}body{margin:0;background:#f7f6f4;color:var(--ink);font-family:Inter,Pretendard,"Noto Sans KR",Arial,sans-serif}
@@ -80,7 +82,15 @@ input[type=file]{display:none}
   flex-shrink:1;
 }
 .art-head{border-bottom:1px solid currentColor;padding-bottom:16px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
-.art-title{font-size:clamp(22px,3vw,38px);font-weight:950;letter-spacing:-1.8px;line-height:1}.art-sub{font-size:9px;letter-spacing:2px;font-weight:800;margin-top:9px;opacity:.65}.art-count{text-align:right;font-size:10px;line-height:1.7;font-weight:800}
+.art-title {
+  font-size: clamp(20px,3vw,60px);
+  font-weight: 950;
+  letter-spacing: -1.8px;
+  line-height: 1;
+  white-space: nowrap;
+  max-width: 100%;
+}
+.art-sub{font-size:9px;letter-spacing:2px;font-weight:800;margin-top:9px;opacity:.65}.art-count{text-align:right;font-size:10px;line-height:1.7;font-weight:800}
 #chosenGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-content:start;align-items:start;flex:none;width:100%;min-height:120px}.trade-layout{display:none;grid-template-columns:minmax(0,1fr) 2px minmax(0,1fr);gap:14px;flex:1;min-height:120px}.trade-side{min-width:0}
 /*.trade-side h3{font-size:11px;margin:0 0 10px;text-align:center}*/
 .trade-side h3 {
@@ -182,7 +192,11 @@ input[type=file]{display:none}
   }
 }
   /* 사이트 화면에서 부제목과 카드 개수 숨기기 */
-.art-sub, .art-count {
+.art-count {
+  display: none;
+}
+
+.art-sub {
   display: none;
 }
 
@@ -295,6 +309,81 @@ input[type=file]{display:none}
     text-decoration: underline;
   }
 }
+  
+/* =========================
+   모바일 미리보기 화면 수정
+========================= */
+@media (max-width: 480px) {
+
+  /* 미리보기 영역 */
+  .canvas-wrap {
+    width: 100%;
+    min-width: 0;
+    padding: 8px;
+    overflow-x: auto;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  /* 실제 미리보기 판 */
+  #artboard {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    padding: 14px;
+    overflow: visible;
+  }
+
+  /* 제목 영역 */
+  .art-head {
+    width: 100%;
+    min-width: 0;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  /* 제목 글자 */
+  .art-title {
+    font-size: clamp(18px, 6vw, 30px);
+    letter-spacing: -1px;
+    line-height: 1.15;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  /* 포카 목록 */
+  #chosenGrid {
+    width: 100%;
+    min-width: 0;
+    gap: 7px;
+  }
+
+  /* 교환 리스트 */
+  .trade-layout {
+    grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
+    gap: 7px;
+    min-width: 0;
+  }
+
+  .trade-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 5px;
+  }
+
+  .trade-side {
+    min-width: 0;
+  }
+
+  /* 포카 이름 */
+  .chosen-name {
+    font-size: 8px;
+    overflow-wrap: anywhere;
+  }
+
+}
+
 </style>
 </head>
 <body>
@@ -431,21 +520,79 @@ input[type=file]{display:none}
 </aside>
 <section class="preview-panel">
   <div class="preview-top"><div><h2>리스트 미리보기</h2><p>선택한 포카만 모아 단색 배경의 이미지로 만들어요.</p></div><div class="actions"><button class="secondary" id="resetLayout">선택 초기화</button><button class="primary" id="saveImage">PNG 이미지 저장 ↓</button></div></div>
-  <div class="controls">
-    <div class="control"><label for="listType">리스트 종류</label><select id="listType"><option value="wanted">위시 리스트</option><option value="trade" selected>교환 리스트</option></select></div>
-    <div class="control"><label for="columns">배치</label>
-      <select id="columns">
-        <option value="2">2열</option>
-        <option value="3">3열</option>
-        <option value="4" selected>4열</option>
-        <option value="5">5열</option>
-        <option value="6">6열</option>
-        <option value="7">7열</option>
-        <option value="8">8열</option>
-        <option value="9">9열</option>
-        <option value="10">10열</option></select></div>
-    <div class="control"><label for="bgColor">배경</label><div class="color-row"><input id="bgColor" type="color" value="#f4eee7"><input id="bgHex" type="text" value="#F4EEE7" maxlength="7" aria-label="배경 HEX 코드"></div></div>
+  
+<div class="controls">
+
+  <div class="control">
+    <label for="listType">리스트 종류</label>
+    <select id="listType">
+      <option value="wanted" selected>위시 리스트</option>
+      <option value="trade">교환 리스트</option>
+    </select>
   </div>
+
+  <div class="control">
+    <label for="columns">배치</label>
+    <select id="columns">
+      <option value="1">1열</option>
+      <option value="2">2열</option>
+      <option value="3">3열</option>
+      <option value="4" selected>4열</option>
+      <option value="5">5열</option>
+      <option value="6">6열</option>
+      <option value="7">7열</option>
+      <option value="8">8열</option>
+      <option value="9">9열</option>
+      <option value="10">10열</option>
+      <option value="11">11열</option>
+      <option value="12">12열</option>
+      <option value="13">13열</option>
+      <option value="14">14열</option>
+      <option value="15">15열</option>
+    </select>
+  </div>
+
+  <div class="control">
+    <label for="bgColor">배경색</label>
+    <div class="color-row">
+      <input id="bgColor" type="color" value="#f4eee7">
+      <input id="bgHex" type="text" value="#F4EEE7"
+             maxlength="7" aria-label="배경 HEX 코드">
+    </div>
+  </div>
+
+<div class="control">
+    <label for="textColor">글자색</label>
+    <div class="color-row">
+      <input id="textColor" type="color" value="#252525">
+      <input id="textHex" type="text" value="#252525"
+             maxlength="7" aria-label="글자색 HEX 코드">
+    </div>
+  </div>
+  
+  
+
+  
+
+  <div class="control">
+    <label for="titleSize">
+      제목 크기 <span id="titleSizeValue">38px</span>
+    </label>
+    <input id="titleSize" type="range"
+           min="20" max="60" value="38">
+  </div>
+  
+  <div class="control">
+    <label for="customTitle">제목 입력</label>
+    <input id="customTitle" type="text"
+           placeholder="기본 제목 사용">
+  </div>
+  
+  
+
+
+</div>
+
   <div class="canvas-wrap"><div id="artboard">
     <div class="art-head"><div>
       <div class="art-title" id="artTitle">WANTED<br>PHOTOCARDS</div>
@@ -510,8 +657,43 @@ function render(){
  
  const chosen=cards.filter(c=>selected.has(c.id));const owned=cards.filter(c=>ownedCards.has(c.id)), wanted=cards.filter(c=>wantedCards.has(c.id));$('selectedHelp').textContent=$('listType').value==='trade'?`보유 ${owned.length}개 · 원하는 포카 ${wanted.length}개 선택됨`:`${chosen.length}개 선택됨 · 선택한 포카만 오른쪽 리스트에 표시됩니다.`;
  const isTrade=$('listType').value==='trade';document.body.classList.toggle('trade-mode',isTrade);$('artCount').textContent=String(isTrade?owned.length+wanted.length:chosen.length).padStart(2,'0');
- $('artTitle').innerHTML=isTrade?'TRADE<br>PHOTOCARDS':'WANTED<br>PHOTOCARDS';$('artSub').textContent=isTrade?'HAVE ↔ WANT · PHOTOCARD EXCHANGE':'WANTED PHOTOCARDS · LOOKING FOR';
- const columnCount=Math.max(2,Math.min(10,Number($('columns').value)||3));const grid=$('chosenGrid');grid.style.gridTemplateColumns=`repeat(${columnCount}, minmax(0, 1fr))`;grid.dataset.columns=String(columnCount);
+ 
+// 기본 제목 및 부제목
+const defaultTitle = isTrade
+  ? 'TRADE PHOTOCARDS'
+  : 'WANTED PHOTOCARDS';
+
+
+
+// 사용자가 입력한 제목과 부제목
+const customTitle = $('customTitle').value.trim();
+
+
+// 미리보기 제목 적용
+if (customTitle) {
+  $('artTitle').textContent = customTitle;
+} else {
+  $('artTitle').innerHTML = defaultTitle;
+}
+
+
+
+// 제목 크기 및 글자색 적용
+const titleSize = Number($('titleSize').value);
+const textColor = $('textColor').value;
+
+$('titleSizeValue').textContent = titleSize + 'px';
+$('artTitle').style.fontSize = titleSize + 'px';
+
+$('artboard').style.color = textColor;
+$('artboard').style.background = $('bgColor').value;
+$('artTitle').style.color = textColor;
+$('textHex').value = textColor.toUpperCase();
+
+
+
+
+ const columnCount=Math.max(1,Math.min(15,Number($('columns').value)||3));const grid=$('chosenGrid');grid.style.gridTemplateColumns=`repeat(${columnCount}, minmax(0, 1fr))`;grid.dataset.columns=String(columnCount);
 if(!chosen.length) {
   grid.innerHTML = '<div class="empty">왼쪽 보관함에서 구하고 싶은 포카를 선택해 주세요.</div>';
 } else {
@@ -525,15 +707,32 @@ if(!chosen.length) {
  for(const [id,list] of [['ownedGrid',owned],['wantedGrid',wanted]]){const g=$(id);g.style.gridTemplateColumns=`repeat(${columnCount}, minmax(0, 1fr))`;g.innerHTML=list.length?list.map(c=>`<div class="chosen-card"><img src="${c.src}" alt=""><div class="chosen-name">${escapeHtml(c.name)}</div></div>`).join(''):'<div class="empty">포카를 선택해 주세요.</div>';}
  $('artboard').style.background=$('bgColor').value;$('bgHex').value=$('bgColor').value.toUpperCase();
 }
-$('search').addEventListener('input',render);
-$('category').addEventListener('change',render);
+// 제목 및 글자 꾸미기 변경 이벤트
+$('customTitle').addEventListener('input', render);
+$('titleSize').addEventListener('input', render);
+$('textColor').addEventListener('input', render);
+  
 $('selectVisible').addEventListener('click',()=>{const q=$('search').value.trim().toLowerCase(),cat=$('category').value;cards.filter(c=>(cat==='all'||c.category===cat)&&(c.name+' '+c.tags+' '+c.category).toLowerCase().includes(q)).forEach(c=>selected.add(c.id));render()});
 $('clearSelected').addEventListener('click',()=>{selected.clear();ownedCards.clear();wantedCards.clear();render()});
 $('resetLayout').addEventListener('click',()=>{selected.clear();ownedCards.clear();wantedCards.clear();render()});
 $('listType').addEventListener('change',render);$('columns').addEventListener('input',render);$('columns').addEventListener('change',render);
 $('bgColor').addEventListener('input',render);
 $('bgHex').addEventListener('change',()=>{let v=$('bgHex').value.trim();if(!v.startsWith('#'))v='#'+v;if(/^#[0-9a-fA-F]{6}$/.test(v)){$('bgColor').value=v;render()}else toast('HEX 코드를 확인해 주세요.');});
-async function savePNG(){
+// 글자색 HEX 코드 직접 입력
+$('textHex').addEventListener('change', () => {
+  let v = $('textHex').value.trim();
+
+  if (!v.startsWith('#')) v = '#' + v;
+
+  if (/^#[0-9a-fA-F]{6}$/.test(v)) {
+    $('textColor').value = v;
+    render();
+  } else {
+    toast('HEX 코드를 확인해 주세요.');
+    $('textHex').value = $('textColor').value.toUpperCase();
+  }
+});
+  async function savePNG(){
  const button=$('saveImage');
  try {
   const isTrade=$('listType').value==='trade';
@@ -542,8 +741,33 @@ async function savePNG(){
   const chosen=isTrade?[...owned.map(c=>({...c,_side:'owned'})),...wanted.map(c=>({...c,_side:'wanted'}))]:cards.filter(c=>selected.has(c.id));
   if(!chosen.length){toast('먼저 포카를 선택해 주세요.');return;}
   button.disabled=true; const oldText=button.textContent; button.textContent='이미지 만드는 중…';
-  const cols=Math.max(2,Math.min(10,Number($('columns').value)||3));
-  const W=1600,pad=70,gap=18,headH=95,footH=60,nameH=30,top=pad;
+  const cols=Math.max(1,Math.min(15,Number($('columns').value)||3));
+
+const W=1600, pad=70, gap=18, footH=60, nameH=30, top=pad;
+
+// 꾸미기 설정값 가져오기
+const titleFontSize = Number($('titleSize').value);
+const canvasTitleSize = Math.round(titleFontSize * 1.53);
+const textColor = $('textColor').value;
+
+// 제목 및 부제목
+const defaultTitle = isTrade
+  ? 'TRADE PHOTOCARDS'
+  : 'WANTED PHOTOCARDS';
+
+const customTitle = $('customTitle').value.trim();
+const titleLines = [customTitle || defaultTitle];
+
+
+
+
+// 제목 영역 높이 계산
+const titleLineHeight = canvasTitleSize * 1.05;
+const headH = Math.max(
+  95,
+  titleLines.length * titleLineHeight + 55
+);
+
   const halfW=(W-2*pad-44)/2;
   const tradeCardW=(halfW-gap*(cols-1))/cols;
   const normalCardW=(W-2*pad-gap*(cols-1))/cols;
@@ -559,14 +783,23 @@ async function savePNG(){
   const ctx=cv.getContext('2d'); if(!ctx) throw new Error('이미지 캔버스를 만들 수 없습니다.');
   ctx.fillStyle=$('bgColor').value||'#f4eee7';ctx.fillRect(0,0,W,cv.height);
 
-  const title=isTrade?['TRADE','PHOTOCARDS']:['WANTED','PHOTOCARDS'];
-
-  ctx.fillStyle='#252525'; // 제목 글자 색상 지정
-  ctx.font='900 58px Arial,sans-serif';
   
-  title.forEach((t,i)=>{
-    ctx.fillText(t,top,top+i*57, W-2*pad-220);
-  });
+// 제목 출력
+ctx.fillStyle = textColor;
+ctx.font = `900 ${canvasTitleSize}px Arial,sans-serif`;
+ctx.textAlign = 'left';
+
+titleLines.forEach((line, i) => {
+  ctx.fillText(
+    line,
+    top,
+    top + canvasTitleSize + i * titleLineHeight,
+    W - 2 * pad - 220
+  );
+});
+
+
+
   
   /*ctx.font='800 18px Arial,sans-serif';
   ctx.fillText(
@@ -576,7 +809,7 @@ async function savePNG(){
   );*/
    
   /*ctx.textAlign='right';ctx.font='800 23px Arial,sans-serif';ctx.fillText(String(chosen.length).padStart(2,'0'),W-pad,top+10);ctx.font='800 13px Arial,sans-serif';ctx.fillText('CARDS TOTAL',W-pad,top+42);ctx.textAlign='left';*/
-  ctx.strokeStyle='#252525';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(pad,top+headH);ctx.lineTo(W-pad,top+headH);ctx.stroke();
+  ctx.strokeStyle=textColor;ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(pad,top+headH);ctx.lineTo(W-pad,top+headH);ctx.stroke();
   /*if(isTrade){ctx.font='800 17px Arial,sans-serif';ctx.fillText('내가 보유한 포카',pad,startY-28);ctx.fillText('내가 원하는 포카',W/2+22,startY-28);ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(W/2,startY-30);ctx.lineTo(W/2,cv.height-pad-8);ctx.stroke();}*/
   /*if(isTrade){
     ctx.font='800 17px Arial,sans-serif';
@@ -631,7 +864,7 @@ async function savePNG(){
    const img=await loadImage(c.src);const ratio=Math.min(cardW/img.naturalWidth,imgH/img.naturalHeight),dw=img.naturalWidth*ratio,dh=img.naturalHeight*ratio;
    ctx.drawImage(img,x+(cardW-dw)/2,y+(imgH-dh)/2,dw,dh);
     ctx.strokeStyle='#00000025';ctx.strokeRect(x,y,cardW,imgH);
-   ctx.fillStyle='#252525';ctx.font=`800 ${Math.max(9,Math.min(15,cardW/9))}px Arial,sans-serif`;
+   ctx.fillStyle=textColor;ctx.font=`800 ${Math.max(9,Math.min(15,cardW/9))}px Arial,sans-serif`;
    ctx.textAlign='center';
    ctx.textBaseline='top';
    const words=(c.name||'').split(' ');
